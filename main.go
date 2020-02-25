@@ -20,7 +20,7 @@ func main() {
 	input := flag.String("in", "horoskop", "input file")
 	n := flag.Int("n", 2, "number of words to use as prefix")
 	runs := flag.Int("runs", 1, "number of runs to generate")
-	wordsPerRun := flag.Int("words", 300, "number of words per run")
+	wordsPerRun := flag.Int("words", 50, "number of words per run")
 	startOnCapital := flag.Bool("capital", true, "start output with a capitalized prefix")
 	stopAtSentence := flag.Bool("sentence", true, "end output at a sentence ending punctuation mark (after n words)")
 	flag.Parse()
@@ -41,19 +41,6 @@ func main() {
 	}
 }
  
-// We'd like to use a map of []string -> []string (i.e. list of prefix
-// words -> list of possible next words) but Go doesn't allow slices to be
-// map keys.
-//
-// We could use arrays, e.g. map of [2]string -> []string, but array lengths
-// are fixed at compile time. To work around that we could set a maximum value
-// for n, say 8 or 16, and waste the extra array slots for smaller n.
-//
-// Or we could make the suffix map key just be the full prefix string. Then
-// to get the words within the prefix we could either have a separate map
-// (i.e. map of string -> []string) for the full prefix string -> the list
-// of the prefix words. Or we could use strings.Fields() and strings.Join() to
-// go back and forth (trading more runtime for less memory use).
  
 // Markov is a Markov chain text generator.
 type Markov struct {
